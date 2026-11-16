@@ -25,7 +25,7 @@
 
 ```
 q, dq ∈ R⁷  ──FK──→  X_ee(q) ∈ SE(3)
-                         │
+                          │
 X_target ∈ SE(3) ─────────┤
                          ▼
                  Ψ = X_target⁻¹ X_ee
@@ -324,11 +324,11 @@ make_arm_controller("arm_osc", overrides={"kp_pos": 8.0})
 Задача задаёт `q_target` — семь целевых углов суставов. Контроллер постепенно перемещает команду `q_cmd` в сторону цели, ограничивая изменение за один такт:
 
 ```math
-\Delta q = \operatorname{clip}\left(K_p(q_{\mathrm{target}}-q_{\mathrm{cmd}}),\,-\Delta_{\max},\,\Delta_{\max}\right)
+\Delta q = \mathrm{clip}\left(K_p(q_{\mathrm{target}}-q_{\mathrm{cmd}}),\,-\Delta_{\max},\,\Delta_{\max}\right)
 ```
 
 ```math
-q_{\mathrm{cmd}} \leftarrow \operatorname{clip}\left(q_{\mathrm{cmd}} + \Delta q,\,q_{\min},\,q_{\max}\right)
+q_{\mathrm{cmd}} \leftarrow \mathrm{clip}\left(q_{\mathrm{cmd}} + \Delta q,\,q_{\min},\,q_{\max}\right)
 ```
 
 Параметры:
@@ -360,7 +360,7 @@ N = I-J^{\#}J,\qquad
 ```
 
 ```math
-\Delta q = \operatorname{clip}\left(\Delta q_{\mathrm{task}} + N\Delta q_{\mathrm{null}},\,-\Delta_{\max},\,\Delta_{\max}\right)
+\Delta q = \mathrm{clip}\left(\Delta q_{\mathrm{task}} + N\Delta q_{\mathrm{null}},\,-\Delta_{\max},\,\Delta_{\max}\right)
 ```
 
 Если `gain_ori = 0`, используется только позиционный якобиан размерности 3×7.
@@ -413,9 +413,9 @@ N = I-J^{\#}J,\qquad
 **5. Интеграция в целевые положения суставов:**
 
 ```math
-q_{\mathrm{cmd}}\leftarrow\operatorname{clip}\left(
+q_{\mathrm{cmd}}\leftarrow\mathrm{clip}\left(
 q_{\mathrm{cmd}}+
-\operatorname{clip}\left((\dot q_{\mathrm{task}}+N\dot q_{\mathrm{null}})dt,\,-\Delta_{\max},\,\Delta_{\max}\right),
+\mathrm{clip}\left((\dot q_{\mathrm{task}}+N\dot q_{\mathrm{null}})dt,\,-\Delta_{\max},\,\Delta_{\max}\right),
 \,q_{\min},\,q_{\max}\right)
 ```
 
@@ -460,7 +460,7 @@ DLS-псевдообратная J_b# -> суставные скорости
 
 ```math
 \Psi = X_d^{-1}X_{ee},\qquad
-\psi = \operatorname{unhat}(\log\Psi)\in\mathbb{R}^6
+\psi = \mathrm{unhat}(\log\Psi)\in\mathbb{R}^6
 ```
 
 **2. Body-Jacobian**, переводящий суставные скорости в скорость рабочего органа в его локальной системе координат:
@@ -495,8 +495,8 @@ N=I-J_b^{\#}J_b,\qquad
 ```
 
 ```math
-q_{\mathrm{cmd}}\leftarrow \operatorname{clip}\left(
-q_{\mathrm{cmd}}+\operatorname{clip}\left(
+q_{\mathrm{cmd}}\leftarrow \mathrm{clip}\left(
+q_{\mathrm{cmd}}+\mathrm{clip}\left(
 (\dot q_{\mathrm{task}}+N\dot q_{\mathrm{null}})dt,\,-\Delta_{\max},\,\Delta_{\max}
 \right),\,q_{\min},\,q_{\max}\right)
 ```

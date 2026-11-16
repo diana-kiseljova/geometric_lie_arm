@@ -1,0 +1,18 @@
+
+# Core
+numpy
+scipy
+mujoco
+PyYAML
+tqdm
+
+# MPC controllers
+cvxpy
+osqp
+
+# Legacy ODE controllers
+odeintw
+
+# Visualization
+matplotlib
+Pillow
